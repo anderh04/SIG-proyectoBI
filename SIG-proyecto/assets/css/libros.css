@@ -1,0 +1,358 @@
+/* Estilos generales para la página de libros */
+.libros-container {
+    padding: 20px;
+    background-color: #f8f9fc;
+    min-height: calc(100vh - 60px);
+}
+
+/* Estilos para la barra de búsqueda y filtros */
+.search-container {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin-bottom: 30px;
+    transition: all 0.3s ease;
+}
+
+.search-container:hover {
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+}
+
+.search-input {
+    border: 2px solid #e3e6f0;
+    border-radius: 30px;
+    padding: 12px 25px;
+    width: 100%;
+    transition: all 0.3s;
+    font-size: 1rem;
+}
+
+.search-input:focus {
+    border-color: #4e73df;
+    box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+    outline: none;
+}
+
+/* Estilos para las tarjetas de libros */
+.book-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    margin-bottom: 25px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.book-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.book-cover {
+    height: 220px;
+    background-color: #f8f9fc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.book-cover img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.book-card:hover .book-cover img {
+    transform: scale(1.05);
+}
+
+.book-cover .default-icon {
+    font-size: 4.5rem;
+    color: #4e73df;
+    opacity: 0.8;
+}
+
+.book-info {
+    padding: 25px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.book-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #2e59d9;
+    line-height: 1.4;
+}
+
+.book-author {
+    color: #6c757d;
+    font-size: 1rem;
+    margin-bottom: 8px;
+}
+
+.book-category {
+    font-size: 0.9rem;
+    color: #858796;
+    margin-bottom: 15px;
+    padding: 5px 12px;
+    background: #f8f9fc;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+/* Estilos para el estado del libro */
+.book-status {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 6px 12px;
+    border-radius: 25px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.status-available {
+    background-color: #1cc88a;
+    color: white;
+}
+
+.status-borrowed {
+    background-color: #e74a3b;
+    color: white;
+}
+
+/* Estilos para los botones de acción */
+.action-buttons {
+    margin-top: auto;
+    display: flex;
+    gap: 12px;
+    padding-top: 20px;
+    border-top: 1px solid #e3e6f0;
+}
+
+.btn-action {
+    padding: 10px 18px;
+    border-radius: 25px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-action:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-edit {
+    background-color: #4e73df;
+    color: white;
+    border: none;
+}
+
+.btn-edit:hover {
+    background-color: #2e59d9;
+    color: white;
+}
+
+.btn-delete {
+    background-color: #e74a3b;
+    color: white;
+    border: none;
+}
+
+.btn-delete:hover {
+    background-color: #d52a1a;
+    color: white;
+}
+
+/* Estilos para el botón de agregar libro */
+.add-book-btn {
+    background: linear-gradient(45deg, #4e73df, #2e59d9);
+    border: none;
+    border-radius: 30px;
+    padding: 12px 30px;
+    color: white;
+    font-weight: 500;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.add-book-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(78, 115, 223, 0.3);
+}
+
+/* Estilos para la paginación */
+.pagination {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.page-item {
+    list-style: none;
+}
+
+.page-link {
+    padding: 10px 18px;
+    border-radius: 8px;
+    color: #4e73df;
+    text-decoration: none;
+    transition: all 0.3s;
+    border: 1px solid #e3e6f0;
+}
+
+.page-link:hover {
+    background-color: #4e73df;
+    color: white;
+    border-color: #4e73df;
+}
+
+.page-item.active .page-link {
+    background-color: #4e73df;
+    color: white;
+    border-color: #4e73df;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .book-card {
+        margin-bottom: 20px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .btn-action {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .search-container {
+        padding: 15px;
+    }
+
+    .search-input {
+        padding: 10px 20px;
+    }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.book-card {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Efecto de hover para las tarjetas */
+.book-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(78, 115, 223, 0.1), rgba(46, 89, 217, 0.1));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.book-card:hover::after {
+    opacity: 1;
+}
+
+/* Estilos para los badges */
+.badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.badge-success {
+    background-color: #1cc88a;
+    color: white;
+}
+
+.badge-success:hover {
+    background-color: #17a673;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(28, 200, 138, 0.2);
+}
+
+.badge-danger {
+    background-color: #e74a3b;
+    color: white;
+}
+
+.badge-danger:hover {
+    background-color: #d52a1a;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(231, 74, 59, 0.2);
+}
+
+/* Estilos para la tabla */
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+}
+
+.table th {
+    background-color: #f8f9fc;
+    color: #5a5c69;
+    font-weight: 600;
+    padding: 12px 15px;
+    border: none;
+}
+
+.table td {
+    padding: 12px 15px;
+    vertical-align: middle;
+    border: none;
+    background-color: white;
+}
+
+.table tbody tr {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.table tbody tr:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

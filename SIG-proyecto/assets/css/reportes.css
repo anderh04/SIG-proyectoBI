@@ -1,0 +1,129 @@
+/* Estilo general */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+/* Grid para dividir filtros y reporte */
+.reportes-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+}
+
+/* Tarjetas */
+.filtros-card, .reporte-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+
+/* Encabezados */
+.card-header {
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 15px 20px;
+    font-size: 18px;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+/* Formulario de filtros */
+.filtros-form .form-group {
+    margin-bottom: 15px;
+}
+
+.filtros-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.filtros-form input,
+.filtros-form select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+/* Botones */
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+}
+
+.btn-secondary {
+    background-color: #7f8c8d;
+    color: #fff;
+    margin-left: 10px;
+}
+
+.btn-secondary:hover {
+    background-color: #636e72;
+}
+
+/* Acciones dentro del reporte */
+.acciones-reporte {
+    display: flex;
+    align-items: center;
+}
+
+/* Reporte vacío */
+.reporte-vacio {
+    text-align: center;
+    color: #aaa;
+    padding: 40px 20px;
+}
+
+.reporte-vacio i {
+    font-size: 48px;
+    margin-bottom: 10px;
+    color: #bdc3c7;
+}
+
+/* Tabla de reportes */
+@media (max-width: 768px) {
+    .reportes-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .acciones-reporte {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .acciones-reporte .btn {
+        margin-top: 10px;
+    }
+}
