@@ -39,6 +39,24 @@ $estudiante_registrado = isset($_SESSION['id_estudiante']);
     .hidden {
         display: none;
     }
+ .alert {
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        border-radius: var(--border-radius);
+        border: none;
+    }
+
+    .alert-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+   
     </style>
 </head>
 
