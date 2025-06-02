@@ -1,60 +1,57 @@
 <?php
 session_start();
-require_once 'config/connection.php';
+require_once 'config/conexion.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Recoger datos del formulario
-    $codigo_estudiante = $conn->real_escape_string($_POST['codigo_estudiante']);
-    $nombre = $conn->real_escape_string($_POST['nombre']);
-    $apellido = $conn->real_escape_string($_POST['apellido']);
-    $genero = $conn->real_escape_string($_POST['genero']);
-    $id_carrera = intval($_POST['id_carrera']);
-    $email = isset($_POST['email']) ? $conn->real_escape_string($_POST['email']) : null;
-    $telefono = isset($_POST['telefono']) ? $conn->real_escape_string($_POST['telefono']) : null;
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $Cedula = $_POST['Cedula'] ?? '';
+    $nombre = $_POST['nombre'] ?? '';
+    $apellido = $_POST['apellido'] ?? '';
+    $genero = $_POST['genero'] ?? '';
+    $id_carrera = $_POST['id_carrera'] ?? '';
+    $email = $_POST['email'] ?? null;
+    $telefono = $_POST['telefono'] ?? null;
 
-    // Verificar si el estudiante ya existe
-    $check_sql = "SELECT id_estudiante FROM estudiantes WHERE codigo_estudiante = '$codigo_estudiante'";
-    $check_result = $conn->query($check_sql);
-    
-    if ($check_result->num_rows > 0) {
-        // Estudiante ya existe, iniciar sesión
-        $row = $check_result->fetch_assoc();
-        $_SESSION['id_estudiante'] = $row['id_estudiante'];
-        $_SESSION['codigo_estudiante'] = $codigo_estudiante;
-        $_SESSION['nombre'] = $nombre;
-        $_SESSION['apellido'] = $apellido;
-        
-        // Obtener nombre de la carrera
-        $carrera_sql = "SELECT nombre FROM carreras WHERE id_carrera = $id_carrera";
-        $carrera_result = $conn->query($carrera_sql);
-        $_SESSION['carrera'] = $carrera_result->fetch_assoc()['nombre'];
-        
-        header("Location: index.php");
+    if (empty($Cedula) || empty($nombre) || empty($apellido) || empty($genero) || empty($id_carrera)) {
+        // Manejar campos requeridos faltantes
+        header('Location: index.php?error=missing_fields');
         exit();
-    } else {
-        // Insertar nuevo estudiante
-        $insert_sql = "INSERT INTO estudiantes (codigo_estudiante, nombre, apellido, genero, id_carrera, email, telefono)
-                      VALUES ('$codigo_estudiante', '$nombre', '$apellido', '$genero', $id_carrera, " .
-                      ($email ? "'$email'" : "NULL") . ", " . ($telefono ? "'$telefono'" : "NULL") . ")";
-        
-        if ($conn->query($insert_sql) === TRUE) {
-            $_SESSION['id_estudiante'] = $conn->insert_id;
-            $_SESSION['codigo_estudiante'] = $codigo_estudiante;
-            $_SESSION['nombre'] = $nombre;
-            $_SESSION['apellido'] = $apellido;
-            
-            // Obtener nombre de la carrera
-            $carrera_sql = "SELECT nombre FROM carreras WHERE id_carrera = $id_carrera";
-            $carrera_result = $conn->query($carrera_sql);
-            $_SESSION['carrera'] = $carrera_result->fetch_assoc()['nombre'];
-            
-            header("Location: index.php");
-            exit();
-        } else {
-            echo "Error: " . $insert_sql . "<br>" . $conn->error;
-        }
     }
-}
 
-$conn->close();
-?>
+    try {
+        // Verificar si el estudiante ya existe por cédula
+        $stmt = $conn->prepare("SELECT id_estudiante FROM estudiantes WHERE Cedula = ?");
+        $stmt->execute([$Cedula]);
+        if ($stmt->fetch()) {
+            header('Location: index.php?error=student_exists');
+            exit();
+        }
+
+        // Insertar nuevo estudiante
+        $stmt = $conn->prepare("INSERT INTO estudiantes (Cedula, nombre, apellido, genero, id_carrera, email, telefono) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$Cedula, $nombre, $apellido, $genero, $id_carrera, $email, $telefono]);
+
+        // Iniciar sesión automáticamente después del registro
+        $id_estudiante = $conn->lastInsertId();
+        $_SESSION['id_estudiante'] = $id_estudiante;
+        $_SESSION['Cedula'] = $Cedula;
+        $_SESSION['nombre'] = $nombre;
+
+        // Obtener nombre de la carrera para mostrar en sesión
+        $stmt_carrera = $conn->prepare("SELECT nombre_carrera FROM carreras WHERE id_carrera = ?");
+        $stmt_carrera->execute([$id_carrera]);
+        $carrera_data = $stmt_carrera->fetch(PDO::FETCH_ASSOC);
+        $_SESSION['carrera'] = $carrera_data['nombre_carrera'] ?? 'Desconocida';
+
+        header('Location: index.php?success=registration_successful');
+        exit();
+
+    } catch (PDOException $e) {
+        // Manejar errores de base de datos
+        error_log("Error de registro: " . $e->getMessage());
+        header('Location: index.php?error=db_error');
+        exit();
+    }
+} else {
+    header('Location: index.php'); // Redirigir si no es una solicitud POST
+    exit();
+}
