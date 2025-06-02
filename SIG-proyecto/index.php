@@ -44,10 +44,33 @@ $estudiante_registrado = isset($_SESSION['id_estudiante']);
 
 <body>
     <div class="container py-5">
-        <h1 class="text-center mb-4">Sistema de Registro y Asistencia</h1>
-
-        <?php if(!$estudiante_registrado): ?>
+        <h1 class="text-center mb-4">Sistema de Registro y Asistencia</h1>     
+   
+    <?php if(!$estudiante_registrado): ?>
         <!-- Sección de Registro/Login -->
+
+        <?php if (isset($_SESSION['errores']) && !empty($_SESSION['errores'])): ?>
+        <div class="alert alert-danger" role="alert">
+            <strong>Error:</strong>
+            <ul>
+                <?php foreach ($_SESSION['errores'] as $error): ?>
+                <li><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+        <?php
+                unset($_SESSION['errores']);
+            endif;
+
+            if (isset($_SESSION['exito'])): ?>
+        <div class="alert alert-success" role="alert">
+            <strong>Éxito!</strong> <?= htmlspecialchars($_SESSION['exito'], ENT_QUOTES, 'UTF-8'); ?>
+        </div>
+        <?php
+                unset($_SESSION['exito']);
+            endif;
+            ?>
+
         <div class="row">
             <div class="col-md-6">
                 <div class="form-section">
